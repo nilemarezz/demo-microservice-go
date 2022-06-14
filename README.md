@@ -14,6 +14,7 @@ cd deployment && make stop
 - front-end (react)
 - api-gateway (golang,REST,grpc)
 - movie-service (golang,REST,grpc,mysql)
+<img src="https://sv1.picz.in.th/images/2022/06/14/VBUPwy.png" alt="VBUPwy.png" border="0" />
 
 ### Dashboard, UI
 - frontend http://localhost/
@@ -23,6 +24,7 @@ cd deployment && make stop
 ### Tracing
 - Opentelemetry
 - Jaeger
+<img src="https://sv1.picz.in.th/images/2022/06/14/VBxIpP.png" alt="VBxIpP.png" border="0" />
 
 ### Deployment
 - docker
@@ -30,6 +32,7 @@ cd deployment && make stop
 
 ### Document
 - Swaggo API Doc [link](https://github.com/swaggo/swag) 
+<img src="https://sv1.picz.in.th/images/2022/06/14/VBxUWv.png" alt="VBxUWv.png" border="0" />
 
 ### Resource
 - Tracing Example [link](https://github.com/TonPC64/distributed-tracing-in-golang)
