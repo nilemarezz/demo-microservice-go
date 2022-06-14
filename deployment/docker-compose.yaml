@@ -14,6 +14,7 @@ services:
       dockerfile: ./../api-gateway/Dockerfile
     ports:
       - "5000:5000"
+      
   movie-service:
     build: 
       context: ./../movie-service
