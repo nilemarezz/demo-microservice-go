@@ -1,0 +1,109 @@
+definitions:
+  models.Cast:
+    properties:
+      age:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.Movie:
+    description: Movie information with id, name, description, screen_date and cast
+    properties:
+      cast:
+        items:
+          $ref: '#/definitions/models.Cast'
+        type: array
+      description:
+        example: movie description
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: movie name
+        type: string
+      screen_date:
+        example: 01-01-1999
+        type: string
+    type: object
+  utils.JsonResponse:
+    properties:
+      data: {}
+      error:
+        type: boolean
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: nilenon@gmail.com
+    name: Matas Paosriwong
+  description: This is a my demo microservice for experimental.
+  title: Demo-microservice
+  version: "1.0"
+paths:
+  /movies/:
+    get:
+      consumes:
+      - application/json
+      description: Get All Movies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Movie'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.JsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.JsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.JsonResponse'
+      summary: GetMovies
+      tags:
+      - movies
+  /movies/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get Movie By ID
+      parameters:
+      - description: id of movie to be get
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Movie'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.JsonResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.JsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.JsonResponse'
+      summary: GetMovieByID
+      tags:
+      - movies
+swagger: "2.0"

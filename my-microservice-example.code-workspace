@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "./api-gateway"
+		},
+		{
+			"path": "./movie-service"
+		},
+		{
+			"path": "proto"
+		},
+		{
+			"path": "deployment"
+		},
+		{
+			"path": "front-end"
+		}
+	],
+	"settings": {}
+}

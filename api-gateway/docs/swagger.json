@@ -1,0 +1,164 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a my demo microservice for experimental.",
+        "title": "Demo-microservice",
+        "contact": {
+            "name": "Matas Paosriwong",
+            "email": "nilenon@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/movies/": {
+            "get": {
+                "description": "Get All Movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movies"
+                ],
+                "summary": "GetMovies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Movie"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JsonResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/movies/:id": {
+            "get": {
+                "description": "Get Movie By ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movies"
+                ],
+                "summary": "GetMovieByID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of movie to be get",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Movie"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JsonResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JsonResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Cast": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Movie": {
+            "description": "Movie information with id, name, description, screen_date and cast",
+            "type": "object",
+            "properties": {
+                "cast": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Cast"
+                    }
+                },
+                "description": {
+                    "type": "string",
+                    "example": "movie description"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "movie name"
+                },
+                "screen_date": {
+                    "type": "string",
+                    "example": "01-01-1999"
+                }
+            }
+        },
+        "utils.JsonResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

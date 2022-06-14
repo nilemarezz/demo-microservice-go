@@ -1,0 +1,46 @@
+syntax = "proto3";
+package service;
+
+option go_package = "./proto";
+
+
+message Empty {
+}
+
+service MovieService {
+    rpc GetAll(Empty) returns (MoviesResponse);
+    rpc GetByID(MovieRequest) returns (MovieResponse);
+    rpc AddMovie(Movie) returns (AddMovieResponse);
+}
+
+message MoviesResponse {
+    repeated Movie movies = 1;
+}
+
+message MovieRequest {
+    uint32 id = 1;
+}
+message MovieResponse {
+    Movie movie = 1;
+}
+
+message AddMovieResponse{
+    uint32 id = 1;
+    bool success = 2;
+}
+
+message Movie {
+    uint32 id = 1; 
+    string name = 2;
+    string description = 3;
+    repeated Cast cast = 4;
+    string screen_date = 6;
+}
+message Cast {
+    uint32 id = 1; 
+    string name = 2;
+    uint32 age = 3;
+}
+
+
+
