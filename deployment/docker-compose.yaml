@@ -29,6 +29,7 @@ services:
       - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
       - DB_NAME=${MYSQLDB_DATABASE}
       - DB_DRIVER=mysql
+      
   db:
     image: mysql
     container_name: db-container
