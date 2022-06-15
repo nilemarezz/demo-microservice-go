@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/nilemarezz/my-microservice/movie-service/connection"
 	"github.com/nilemarezz/my-microservice/movie-service/internal/repository"
 	"github.com/nilemarezz/my-microservice/movie-service/internal/service"
