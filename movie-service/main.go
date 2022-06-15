@@ -8,11 +8,12 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/nilemarezz/my-microservice/movie-service/database"
+	"github.com/nilemarezz/my-microservice/movie-service/connection"
+	"github.com/nilemarezz/my-microservice/movie-service/internal/repository"
+	"github.com/nilemarezz/my-microservice/movie-service/internal/service"
 	pb "github.com/nilemarezz/my-microservice/movie-service/proto"
-	"github.com/nilemarezz/my-microservice/movie-service/repository"
-	"github.com/nilemarezz/my-microservice/movie-service/service"
-	"github.com/nilemarezz/my-microservice/movie-service/trace"
+	"github.com/nilemarezz/my-microservice/movie-service/tools/trace"
+
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 
@@ -22,7 +23,7 @@ import (
 func init() {
 	initConfig()
 	initTimeZone()
-	database.ConnectDB()
+	connection.ConnectMySQLDB()
 	trace.InitTracer()
 }
 
@@ -38,7 +39,7 @@ func main() {
 	}
 	log.Println("Server start at port", port)
 
-	repo := repository.NewMovieRepository(database.DB)
+	repo := repository.NewMovieRepository(connection.MySqlDB)
 	service := service.NewMovieService(repo)
 	pb.RegisterMovieServiceServer(s, service)
 

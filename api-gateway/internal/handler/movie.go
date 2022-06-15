@@ -1,4 +1,4 @@
-package handlers
+package handler
 
 import (
 	"fmt"
@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/nilemarezz/my-microservice/api-gateway/models"
+	models "github.com/nilemarezz/my-microservice/api-gateway/internal/model"
+	utils "github.com/nilemarezz/my-microservice/api-gateway/internal/util"
 	pb "github.com/nilemarezz/my-microservice/api-gateway/proto"
-	"github.com/nilemarezz/my-microservice/api-gateway/utils"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"

@@ -1,4 +1,4 @@
-package database
+package connection
 
 import (
 	"fmt"
@@ -12,9 +12,9 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 )
 
-var DB *sqlx.DB
+var MySqlDB *sqlx.DB
 
-func ConnectDB() {
+func ConnectMySQLDB() {
 	dns := fmt.Sprintf("%v:%v@tcp(%v)/%v",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
@@ -29,7 +29,7 @@ func ConnectDB() {
 			count++
 		} else {
 			log.Println("Database connected", dns)
-			DB = connection
+			MySqlDB = connection
 			break
 		}
 

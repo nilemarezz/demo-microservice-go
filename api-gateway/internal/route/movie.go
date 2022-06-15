@@ -1,9 +1,9 @@
-package routes
+package route
 
 import (
 	"net/http"
 
-	"github.com/nilemarezz/my-microservice/api-gateway/handlers"
+	handlers "github.com/nilemarezz/my-microservice/api-gateway/internal/handler"
 )
 
 func NewMovieRoute() {

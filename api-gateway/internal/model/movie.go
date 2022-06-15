@@ -1,4 +1,4 @@
-package models
+package model
 
 // Movie model info
 // @Description Movie information

@@ -7,8 +7,9 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/nilemarezz/my-microservice/movie-service/internal/model"
+	"github.com/nilemarezz/my-microservice/movie-service/internal/repository"
 	pb "github.com/nilemarezz/my-microservice/movie-service/proto"
-	"github.com/nilemarezz/my-microservice/movie-service/repository"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	otelCodes "go.opentelemetry.io/otel/codes"
@@ -86,7 +87,7 @@ func (s movieService) AddMovie(ctx context.Context, req *pb.Movie) (*pb.AddMovie
 	return res, nil
 }
 
-func getCast(casts []repository.Cast, ctx context.Context, id int) []*pb.Cast {
+func getCast(casts []model.Cast, ctx context.Context, id int) []*pb.Cast {
 
 	tracer := otel.GetTracerProvider().Tracer("movie-service")
 	_, span := tracer.Start(ctx, "service/getCast")

@@ -1,6 +1,4 @@
-package repository
-
-import "context"
+package model
 
 type Movie struct {
 	Id          int    `db:"movie_id"`
@@ -18,10 +16,4 @@ type Cast struct {
 	Id   int    `db:"id"`
 	Name string `db:"name"`
 	Age  int    `db:"age"`
-}
-
-type MovieRepository interface {
-	All(context.Context) ([]*Movie, error)
-	ByID(uint32, context.Context) (*Movie, error)
-	Add(Movie) error
 }

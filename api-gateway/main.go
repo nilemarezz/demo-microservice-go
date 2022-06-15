@@ -6,8 +6,8 @@ import (
 	"time"
 
 	gohandler "github.com/gorilla/handlers"
-	"github.com/nilemarezz/my-microservice/api-gateway/routes"
-	"github.com/nilemarezz/my-microservice/api-gateway/trace"
+	"github.com/nilemarezz/my-microservice/api-gateway/internal/route"
+	"github.com/nilemarezz/my-microservice/api-gateway/tools/trace"
 
 	// tracing
 
@@ -29,7 +29,7 @@ func init() {
 // @contact.name   Matas Paosriwong
 // @contact.email  nilenon@gmail.com
 func main() {
-	router := routes.NewRouter()
+	router := route.NewRouter()
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
 	// cors
