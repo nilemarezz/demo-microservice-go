@@ -35,6 +35,7 @@ func (s movieService) GetAll(ctx context.Context, req *pb.Empty) (*pb.MoviesResp
 	movies, err := s.repo.All(ctx)
 	if err != nil {
 		fmt.Println(err)
+		return nil, err
 	}
 	var res []*pb.Movie
 	for _, m := range movies {

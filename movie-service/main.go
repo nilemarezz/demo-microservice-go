@@ -11,6 +11,7 @@ import (
 	"github.com/nilemarezz/my-microservice/movie-service/connection"
 	"github.com/nilemarezz/my-microservice/movie-service/internal/repository"
 	"github.com/nilemarezz/my-microservice/movie-service/internal/service"
+
 	pb "github.com/nilemarezz/my-microservice/movie-service/proto"
 	"github.com/nilemarezz/my-microservice/movie-service/tools/trace"
 
