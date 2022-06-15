@@ -10,11 +10,8 @@ import (
 	models "github.com/nilemarezz/my-microservice/api-gateway/internal/model"
 	utils "github.com/nilemarezz/my-microservice/api-gateway/internal/util"
 	pb "github.com/nilemarezz/my-microservice/api-gateway/proto"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 
-	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/otel"
 	"google.golang.org/grpc/metadata"
 )
@@ -23,15 +20,8 @@ type MoveHandler struct {
 	client pb.MovieServiceClient
 }
 
-func NewMovieHandler() MoveHandler {
-	creeds := insecure.NewCredentials()
-	// init dial with otel intercepter
-	cc, err := grpc.Dial("movie-service:50051", grpc.WithTransportCredentials(creeds),
-		grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()))
-	if err != nil {
-		panic(err)
-	}
-	return MoveHandler{client: pb.NewMovieServiceClient(cc)}
+func NewMovieHandler(client pb.MovieServiceClient) MoveHandler {
+	return MoveHandler{client}
 }
 
 // GetMovies godoc
