@@ -14,6 +14,9 @@ require (
 )
 
 require (
+	github.com/stretchr/testify v1.7.2
+	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.14
+	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.14
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.32.0
 	go.opentelemetry.io/contrib/propagators/b3 v1.7.0
 	go.opentelemetry.io/otel v1.7.0
@@ -38,10 +41,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.1.1 // indirect
-	github.com/stretchr/testify v1.7.2 // indirect
 	github.com/subosito/gotenv v1.3.0 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelsql v0.1.14 // indirect
-	github.com/uptrace/opentelemetry-go-extra/otelsqlx v0.1.14 // indirect
 	go.opentelemetry.io/otel/metric v0.30.0 // indirect
 	go.opentelemetry.io/otel/trace v1.7.0 // indirect
 	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2 // indirect

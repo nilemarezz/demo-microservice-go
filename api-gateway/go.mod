@@ -3,6 +3,7 @@ module github.com/nilemarezz/my-microservice/api-gateway
 go 1.17
 
 require (
+	github.com/gorilla/context v1.1.1
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/stretchr/testify v1.7.1

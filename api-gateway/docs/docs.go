@@ -19,6 +19,110 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Login user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "User date to be login",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/util.JsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signup": {
+            "post": {
+                "description": "Signup user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Signup",
+                "parameters": [
+                    {
+                        "description": "User date to be signup",
+                        "name": "User",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/model.SignupResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/model.SignupResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/util.JsonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/util.JsonResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/movies/": {
             "get": {
                 "description": "Get All Movies",
@@ -38,26 +142,26 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Movie"
+                                "$ref": "#/definitions/model.Movie"
                             }
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/utils.JsonResponse"
+                            "$ref": "#/definitions/util.JsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/utils.JsonResponse"
+                            "$ref": "#/definitions/util.JsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/utils.JsonResponse"
+                            "$ref": "#/definitions/util.JsonResponse"
                         }
                     }
                 }
@@ -89,25 +193,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Movie"
+                            "$ref": "#/definitions/model.Movie"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/utils.JsonResponse"
+                            "$ref": "#/definitions/util.JsonResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/utils.JsonResponse"
+                            "$ref": "#/definitions/util.JsonResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/utils.JsonResponse"
+                            "$ref": "#/definitions/util.JsonResponse"
                         }
                     }
                 }
@@ -115,7 +219,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.Cast": {
+        "model.Cast": {
             "type": "object",
             "properties": {
                 "age": {
@@ -129,14 +233,28 @@ const docTemplate = `{
                 }
             }
         },
-        "models.Movie": {
+        "model.LoginResponse": {
+            "description": "LoginResponse information with token,message",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "login success"
+                },
+                "token": {
+                    "type": "string",
+                    "example": "asdg123rgfsd3fs51"
+                }
+            }
+        },
+        "model.Movie": {
             "description": "Movie information with id, name, description, screen_date and cast",
             "type": "object",
             "properties": {
                 "cast": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Cast"
+                        "$ref": "#/definitions/model.Cast"
                     }
                 },
                 "description": {
@@ -157,7 +275,39 @@ const docTemplate = `{
                 }
             }
         },
-        "utils.JsonResponse": {
+        "model.SignupResponse": {
+            "description": "SignupResponse information with success,username,message",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "signup success"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "username": {
+                    "type": "string",
+                    "example": "username"
+                }
+            }
+        },
+        "model.User": {
+            "description": "User information with username,password",
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "Hello"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "Hello1"
+                }
+            }
+        },
+        "util.JsonResponse": {
             "type": "object",
             "properties": {
                 "data": {},

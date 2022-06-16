@@ -1,5 +1,5 @@
 definitions:
-  models.Cast:
+  model.Cast:
     properties:
       age:
         type: integer
@@ -8,12 +8,22 @@ definitions:
       name:
         type: string
     type: object
-  models.Movie:
+  model.LoginResponse:
+    description: LoginResponse information with token,message
+    properties:
+      message:
+        example: login success
+        type: string
+      token:
+        example: asdg123rgfsd3fs51
+        type: string
+    type: object
+  model.Movie:
     description: Movie information with id, name, description, screen_date and cast
     properties:
       cast:
         items:
-          $ref: '#/definitions/models.Cast'
+          $ref: '#/definitions/model.Cast'
         type: array
       description:
         example: movie description
@@ -28,7 +38,30 @@ definitions:
         example: 01-01-1999
         type: string
     type: object
-  utils.JsonResponse:
+  model.SignupResponse:
+    description: SignupResponse information with success,username,message
+    properties:
+      message:
+        example: signup success
+        type: string
+      success:
+        example: true
+        type: boolean
+      username:
+        example: username
+        type: string
+    type: object
+  model.User:
+    description: User information with username,password
+    properties:
+      password:
+        example: Hello
+        type: string
+      username:
+        example: Hello1
+        type: string
+    type: object
+  util.JsonResponse:
     properties:
       data: {}
       error:
@@ -44,6 +77,74 @@ info:
   title: Demo-microservice
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login user
+      parameters:
+      - description: User date to be login
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/model.LoginResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.LoginResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.JsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.JsonResponse'
+      summary: Login
+      tags:
+      - auth
+  /auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Signup user
+      parameters:
+      - description: User date to be signup
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/model.SignupResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.SignupResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/util.JsonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.JsonResponse'
+      summary: Signup
+      tags:
+      - auth
   /movies/:
     get:
       consumes:
@@ -56,20 +157,20 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Movie'
+              $ref: '#/definitions/model.Movie'
             type: array
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/utils.JsonResponse'
+            $ref: '#/definitions/util.JsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.JsonResponse'
+            $ref: '#/definitions/util.JsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.JsonResponse'
+            $ref: '#/definitions/util.JsonResponse'
       summary: GetMovies
       tags:
       - movies
@@ -90,19 +191,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Movie'
+            $ref: '#/definitions/model.Movie'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/utils.JsonResponse'
+            $ref: '#/definitions/util.JsonResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/utils.JsonResponse'
+            $ref: '#/definitions/util.JsonResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/utils.JsonResponse'
+            $ref: '#/definitions/util.JsonResponse'
       summary: GetMovieByID
       tags:
       - movies

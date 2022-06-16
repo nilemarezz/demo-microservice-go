@@ -109,6 +109,7 @@ func (s userService) Authenticate(ctx context.Context, req *pb.AuthenticateReque
 	_, span := tracer.Start(ctx, "service/Login")
 	defer span.End()
 
+	fmt.Println("authen : ", req)
 	success, id, _ := isValidate(req.Token)
 	if !success {
 		return &pb.AuthenticateResponse{
@@ -120,6 +121,7 @@ func (s userService) Authenticate(ctx context.Context, req *pb.AuthenticateReque
 	// success
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
+		fmt.Println(err)
 		span.RecordError(err)
 		span.SetStatus(otelCodes.Error, err.Error())
 		return nil, err
@@ -128,5 +130,6 @@ func (s userService) Authenticate(ctx context.Context, req *pb.AuthenticateReque
 		Success: success,
 		Id:      int32(idInt),
 	}
+	fmt.Println(res)
 	return res, nil
 }

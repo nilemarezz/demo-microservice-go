@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 const MovieList = ({ movies }) => {
   return (
     <div>
+      <Typography variant="h5" component="h5">
+        Movie List
+      </Typography>
       <Grid container spacing={2}>
         {movies &&
           movies.map((movie) => (
