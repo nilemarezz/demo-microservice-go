@@ -21,7 +21,7 @@ const App = () => {
 
     const getMovies = async () => {
       setLoading(true);
-      const res = await fetch("http://api-gateway:5000/movies/", {
+      const res = await fetch("http://127.0.0.1:5000/movies/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
