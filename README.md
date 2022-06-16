@@ -13,8 +13,9 @@ cd deployment && make stop
 ### Service
 - front-end (react)
 - api-gateway (golang,REST,grpc)
-- movie-service (golang,REST,grpc,mysql)
-<img src="https://sv1.picz.in.th/images/2022/06/14/VBUPwy.png" alt="VBUPwy.png" border="0" />
+- movie-service (golang,grpc,mysql)
+- auth-service (golang,grpc,mysql)
+<img src="https://www.img.in.th/images/5de6052467964c69d2ddb4c66a570c88.png" alt="5de6052467964c69d2ddb4c66a570c88.png" border="0" />
 
 ### Dashboard, UI
 - frontend http://localhost/
