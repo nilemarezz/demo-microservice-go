@@ -1,24 +1,30 @@
 import { Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState(null);
+  let navigate = useNavigate();
   const onSubmit = async () => {
-    const res = await fetch("http://127.0.0.1:5000/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    console.log(data);
-    if (data.success) {
-      // navigate to login
+    try {
+      const data = await axios.post("http://127.0.0.1:5000/auth/signup", {
+        username,
+        password,
+      });
+      console.log(data);
+      if (data.data.success) {
+        navigate("/login");
+      } else {
+        setError("Signup fail");
+      }
+    } catch (err) {
+      console.log(err);
+      setError("Signup fail");
     }
   };
   return (
@@ -58,6 +64,7 @@ const Register = () => {
             <Typography>Have account?</Typography>
           </Link>
         </div>
+        {error && <Typography>{error}</Typography>}
       </Box>
     </div>
   );

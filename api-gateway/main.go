@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	gohandler "github.com/gorilla/handlers"
 	"github.com/nilemarezz/my-microservice/api-gateway/internal/route"
 	"github.com/nilemarezz/my-microservice/api-gateway/tools/trace"
+	"github.com/rs/cors"
 
 	// tracing
 
@@ -32,12 +32,17 @@ func main() {
 	router := route.NewRouter()
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+	})
+
 	// cors
-	ch := gohandler.CORS(gohandler.AllowedOrigins([]string{"*"}))
+	// ch := gohandler.CORS(gohandler.AllowedOrigins([]string{"*"}))
 
 	srv := &http.Server{
 		Addr:         port,
-		Handler:      ch(router),
+		Handler:      c.Handler(router),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,

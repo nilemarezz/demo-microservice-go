@@ -1,7 +1,42 @@
 import { Paper, Typography, Grid, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import LoadingScreen from "../components/LoadingScreen";
+import axios from "axios";
 
-const MovieList = ({ movies }) => {
+const MovieList = () => {
+  const [loading, setLoading] = useState(false);
+  const [movies, setMovies] = useState(null);
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  const getMovies = async () => {
+    let config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        "http://127.0.0.1:5000/movies/",
+        null,
+        config
+      );
+      setMovies(res.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div>
       <Typography variant="h5" component="h5">

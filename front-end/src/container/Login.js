@@ -1,27 +1,33 @@
 import { Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 const Login = ({ setIsLoggedIn }) => {
+  let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const onSubmit = async () => {
-    const res = await fetch("http://127.0.0.1:5000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await res.json();
-    console.log(data);
-    if (data.token !== "") {
-      setIsLoggedIn(true);
-      // navigate to /movies
+    try {
+      const data = await axios.post("http://127.0.0.1:5000/auth/login", {
+        username,
+        password,
+      });
+      console.log(data);
+      if (data.data.token === "") {
+        setError("Login Fail");
+      } else {
+        setIsLoggedIn(true);
+        localStorage.setItem("token", data.data.token);
+        navigate("/movies");
+      }
+    } catch (err) {
+      console.log(err);
+      setError("Login Fail");
     }
-    setIsLoggedIn(true);
   };
   return (
     <div>
@@ -60,6 +66,7 @@ const Login = ({ setIsLoggedIn }) => {
             <Typography>Dont have account?</Typography>
           </Link>
         </div>
+        {error && <Typography>{error}</Typography>}
       </Box>
     </div>
   );
