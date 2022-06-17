@@ -9,29 +9,27 @@ const MovieList = () => {
   const [movies, setMovies] = useState(null);
 
   useEffect(() => {
+    const getMovies = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("http://127.0.0.1:5000/movies/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data = await res.json();
+        console.log(data);
+        setMovies(data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
     getMovies();
   }, []);
-
-  const getMovies = async () => {
-    let config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-    setLoading(true);
-    try {
-      const res = await axios.get(
-        "http://127.0.0.1:5000/movies/",
-        null,
-        config
-      );
-      setMovies(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <LoadingScreen />;

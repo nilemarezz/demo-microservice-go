@@ -21,6 +21,7 @@ func NewAuthMiddleware(client pb.AuthServiceClient) authMiddleware {
 func (m authMiddleware) VerifyToken(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Do stuff here
+		fmt.Println("request")
 		authHeader := r.Header.Get("Authorization")
 		if authHeader != "" {
 			token := getTokenFromHeader(authHeader)

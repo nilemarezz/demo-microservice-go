@@ -12,13 +12,25 @@ const MovieDetail = () => {
   useEffect(() => {
     const getMovieDetail = async () => {
       setLoading(true);
-      const res = await fetch(`http://127.0.0.1:5000/movies/${id}`);
-      const data = await res.json();
-      setDetail(data);
-      setLoading(false);
+      try {
+        const res = await fetch(`http://127.0.0.1:5000/movies/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data = await res.json();
+        console.log(data);
+        setDetail(data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
     };
     getMovieDetail();
-  }, [id]);
+  }, []);
 
   if (loading) {
     return <LoadingScreen />;
